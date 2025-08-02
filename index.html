@@ -27,6 +27,18 @@
             { name: "Reddit", url: "https://reddit.com/user/" },
             { name: "GitHub", url: "https://github.com/" }
         ];
+        
+    // Add these new sites:
+    { name: "TikTok", url: "https://www.tiktok.com/@" }, // Note: @ symbol required
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/" },
+    { name: "Pinterest", url: "https://pinterest.com/" },
+    { name: "Twitch", url: "https://twitch.tv/" },
+    { name: "Snapchat", url: "https://snapchat.com/add/" }, // Requires /add/
+    { name: "Reddit", url: "https://reddit.com/user/" },
+    { name: "YouTube", url: "https://youtube.com/@" }, // For custom handles
+    { name: "Telegram", url: "https://t.me/" },
+    { name: "Discord", url: "https://discord.com/users/" } // Requires user ID
+];
 
         async function checkAccounts() {
             const username = document.getElementById('username').value.trim();
