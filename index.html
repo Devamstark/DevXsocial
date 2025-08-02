@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Social Media Finder</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        input { padding: 10px; width: 70%; }
+        button { padding: 10px 15px; background: #4285F4; color: white; border: none; }
+        #results { margin-top: 20px; }
+        .site { padding: 10px; border-bottom: 1px solid #eee; }
+        .exists { color: green; }
+        .not-exists { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Social Media Account Finder</h1>
+    <input type="text" id="username" placeholder="Enter username">
+    <button onclick="checkAccounts()">Search</button>
+    
+    <div id="results"></div>
+
+    <script>
+        const sites = [
+            { name: "Twitter", url: "https://twitter.com/" },
+            { name: "Instagram", url: "https://instagram.com/" },
+            { name: "Facebook", url: "https://facebook.com/" },
+            { name: "Reddit", url: "https://reddit.com/user/" },
+            { name: "GitHub", url: "https://github.com/" }
+        ];
+
+        async function checkAccounts() {
+            const username = document.getElementById('username').value.trim();
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = "<h3>Searching...</h3>";
+            
+            let resultsHTML = "";
+            
+            for (const site of sites) {
+                const fullUrl = site.url + username;
+                try {
+                    const response = await fetch(fullUrl, { 
+                        method: 'HEAD',
+                        mode: 'no-cors'
+                    });
+                    
+                    // Note: Due to CORS, we can't reliably detect 404 vs 200
+                    // This is a basic implementation that shows all links
+                    resultsHTML += `
+                        <div class="site">
+                            <a href="${fullUrl}" target="_blank">${site.name}</a>
+                            <span>→ Check manually</span>
+                        </div>
+                    `;
+                } catch (error) {
+                    resultsHTML += `
+                        <div class="site">
+                            <a href="${fullUrl}" target="_blank">${site.name}</a>
+                            <span class="not-exists">→ Error checking</span>
+                        </div>
+                    `;
+                }
+            }
+            
+            resultsDiv.innerHTML = resultsHTML;
+        }
+    </script>
+</body>
+</html>
